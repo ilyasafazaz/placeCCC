@@ -3,10 +3,11 @@ import { MapPin, Utensils, Building2, Car, ShoppingBag, Hotel, Calendar, Chevron
 import { samplePlaces, sampleActivities, sampleEvents } from '../data/samples';
 
 const images = [
-  'https://images.mnstatic.com/d2/96/d2967567f7aa784a006de6ae3879bdb9.jpg',
-  'https://thumbs.dreamstime.com/b/le-kasbah-historique-de-chefchaouen-est-une-forteresse-mur%C3%A9e-avec-un-petit-jardin-mus%C3%A9e-ethnographique-et-petite-galerie-d-art-141902467.jpg',
-  'https://media.safarway.com/content/1e9916eb-887f-478f-8dbe-451ae66b5879_sm.jpg',
-  'https://images.pexels.com/photos/4388164/pexels-photo-4388164.jpeg'
+  'https://bluedoorcuisine.com/wp-content/uploads/2023/03/milad-alizadeh-JibMa0FbyHw-unsplash-scaled.jpg',
+  'https://www.hachettebookgroup.com/wp-content/uploads/2019/01/Morocco_ChefchouenAerial_Zzvet-iStock-473937070.jpg',
+  'https://traveladdicts.net/wp-content/uploads/2018/05/Chefchaouen-Morocco-shops-rugs.jpg.webp',
+  'https://media.cntraveler.com/photos/55d63075c47ae13868aeb74f/master/pass/Chefchaouen-Lucy-Laucht-tout.jpg',
+  'https://farm5.staticflickr.com/4802/25730133577_7f49b08505_b.jpg'
 ];
 
 const placeCards = [
