@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Utensils, Building2, Car, ShoppingBag, Hotel, Calendar, ChevronRight, Info, History, Sun, Cloud, Star, Coffee, Map, Clock, MessageSquare } from 'lucide-react';
+import { MapPin, Utensils, Building2, Car, ShoppingBag, Hotel, Calendar, ChevronRight, Info, History, Sun, Cloud, Star, Coffee, Map, Clock, MessageSquare, ThumbsUp, MessageCircle, Share2, MoreHorizontal } from 'lucide-react';
 import { samplePlaces, sampleActivities, sampleEvents } from '../data/samples';
 
 const images = [
@@ -249,28 +249,60 @@ const guideCategories = [
       type: 'forum',
       topics: [
         {
+          id: 1,
           title: 'Best photo spots in Chefchaouen?',
-          author: 'PhotoLover',
-          replies: 24,
-          lastActive: '2h ago'
+          author: {
+            name: 'PhotoLover',
+            credentials: 'Travel Photographer • 5K followers',
+            avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg'
+          },
+          content: 'I\'m planning a photography trip to Chefchaouen and would love to know the best spots for capturing the city\'s famous blue streets and architecture. Any recommendations from photographers who\'ve been there?',
+          upvotes: 245,
+          comments: 24,
+          shares: 12,
+          lastActive: '2h ago',
+          answers: [
+            {
+              id: 1,
+              author: {
+                name: 'MarocExplorer',
+                credentials: 'Local Guide • 10 years experience',
+                avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg'
+              },
+              content: 'As a local guide, I recommend these prime spots:\n\n1. Plaza Uta el-Hammam early morning\n2. The rooftop of Lina Ryad for panoramic views\n3. The narrow alley near Ras el-Maa waterfall\n4. The Spanish Mosque hill for sunset shots\n\nPro tip: Visit during the "blue hour" just after sunrise for the best lighting.',
+              upvotes: 156,
+              comments: 8,
+              timestamp: '1h ago'
+            }
+          ]
         },
         {
-          title: 'Where to stay in the Medina',
-          author: 'Traveler123',
-          replies: 15,
-          lastActive: '5h ago'
-        },
-        {
-          title: 'Local food recommendations',
-          author: 'FoodieExplorer',
-          replies: 32,
-          lastActive: '1d ago'
-        },
-        {
-          title: 'Getting from Tangier to Chefchaouen',
-          author: 'MoroccoBound',
-          replies: 18,
-          lastActive: '2d ago'
+          id: 2,
+          title: 'Where to stay in the Medina?',
+          author: {
+            name: 'Traveler123',
+            credentials: 'Experienced Backpacker',
+            avatar: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg'
+          },
+          content: 'Looking for authentic riad recommendations in Chefchaouen\'s medina. Budget is around $100/night. Preferably with a rooftop terrace and traditional decor.',
+          upvotes: 189,
+          comments: 15,
+          shares: 5,
+          lastActive: '5h ago',
+          answers: [
+            {
+              id: 2,
+              author: {
+                name: 'MoroccoInsider',
+                credentials: 'Hotel Reviewer • Visited 100+ riads',
+                avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg'
+              },
+              content: 'I highly recommend Dar Zambra or Riad Cherifa. Both are within your budget and offer:\n\n• Stunning rooftop views\n• Traditional Moroccan decor\n• Central location in the medina\n• Excellent breakfast included\n\nBook at least 2 months in advance as they fill up quickly!',
+              upvotes: 92,
+              comments: 4,
+              timestamp: '3h ago'
+            }
+          ]
         }
       ]
     }
@@ -392,24 +424,76 @@ const ChefchaouenPage: React.FC = () => {
       case 'forum':
         return (
           <div className="p-4 bg-white rounded-lg shadow-sm">
-            <h3 className="font-medium text-slate-800 mb-4">Recent Discussions</h3>
-            <div className="space-y-3">
+            <div className="mb-6 flex justify-between items-center">
+              <h3 className="font-medium text-slate-800">Recent Questions</h3>
+              <button className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
+                Ask Question
+              </button>
+            </div>
+            <div className="space-y-6">
               {category.content.topics.map(topic => (
-                <div key={topic.title} className="bg-slate-50 p-3 rounded-lg">
-                  <h4 className="font-medium text-slate-800 mb-1">{topic.title}</h4>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-600">by {topic.author}</span>
-                    <div className="flex items-center gap-4">
-                      <span className="text-slate-500">{topic.replies} replies</span>
-                      <span className="text-slate-400">{topic.lastActive}</span>
+                <div key={topic.id} className="border-b border-slate-200 pb-6 last:border-0">
+                  <div className="flex items-start gap-3 mb-3">
+                    <img 
+                      src={topic.author.avatar} 
+                      alt={topic.author.name}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                    <div>
+                      <h4 className="font-medium text-slate-900">{topic.author.name}</h4>
+                      <p className="text-xs text-slate-500">{topic.author.credentials}</p>
                     </div>
                   </div>
+                  <h3 className="text-lg font-medium text-slate-900 mb-2">{topic.title}</h3>
+                  <p className="text-slate-600 mb-4">{topic.content}</p>
+                  <div className="flex items-center gap-6 mb-6">
+                    <button className="flex items-center gap-2 text-slate-600 hover:text-blue-600">
+                      <ThumbsUp size={18} />
+                      <span>{topic.upvotes}</span>
+                    </button>
+                    <button className="flex items-center gap-2 text-slate-600 hover:text-blue-600">
+                      <MessageCircle size={18} />
+                      <span>{topic.comments}</span>
+                    </button>
+                    <button className="flex items-center gap-2 text-slate-600 hover:text-blue-600">
+                      <Share2 size={18} />
+                      <span>{topic.shares}</span>
+                    </button>
+                    <button className="ml-auto text-slate-400 hover:text-slate-600">
+                      <MoreHorizontal size={18} />
+                    </button>
+                  </div>
+                  
+                  {topic.answers.map(answer => (
+                    <div key={answer.id} className="bg-slate-50 rounded-lg p-4 ml-6">
+                      <div className="flex items-start gap-3 mb-3">
+                        <img 
+                          src={answer.author.avatar} 
+                          alt={answer.author.name}
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                        <div>
+                          <h5 className="font-medium text-slate-900">{answer.author.name}</h5>
+                          <p className="text-xs text-slate-500">{answer.author.credentials}</p>
+                        </div>
+                      </div>
+                      <p className="text-slate-600 whitespace-pre-line">{answer.content}</p>
+                      <div className="flex items-center gap-6 mt-4">
+                        <button className="flex items-center gap-2 text-slate-600 hover:text-blue-600">
+                          <ThumbsUp size={16} />
+                          <span>{answer.upvotes}</span>
+                        </button>
+                        <button className="flex items-center gap-2 text-slate-600 hover:text-blue-600">
+                          <MessageCircle size={16} />
+                          <span>{answer.comments}</span>
+                        </button>
+                        <span className="text-sm text-slate-400">{answer.timestamp}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
-            <button className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-              Start New Discussion
-            </button>
           </div>
         );
 
